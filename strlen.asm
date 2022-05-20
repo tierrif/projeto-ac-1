@@ -1,9 +1,9 @@
 @ Data Section
 .data
 .balign 4
-  string: .asciz "Hello, world"
+  string: .asciz "Hello, world" @ String a verificar.
 .balign 4
-  out:    .asciz "Length: %d\n"
+  out:    .asciz "Length: %d\n" @ String de output.
 
 .global printf
 
@@ -12,28 +12,24 @@
 .arm
 
 main:
-  LDR  R0, =string
-  MOV  R1, R0
-  PUSH {LR}
-  BL   strlen
-  POP  {LR}
-  MOV  R2, R0
-  LDR  R0, =out
-  MOV  R1, R2
-  PUSH {LR}
-  BL   printf
-  POP  {LR}
-  BL   _exit
+  LDR  R0, =string    @ Carregar string a verificar.
+  PUSH {LR}           @ Reservar LR para strlen().
+  BL   strlen         @ Chamar strlen().
+  POP  {LR}           @ Voltar ao valor inicial de LR.
+  MOV  R1, R0         @ Mover retorno para segundo parâmetro.
+  LDR  R0, =out       @ Carregar string de output.
+  BL   printf         @ Chamar printf().
+  BL   _exit          @ Pedir ao SO para sair.
 
 strlen:
-  MOV R4, #0
+  MOV R4, #0          @ Inicializar iterador.
   while:
-    ADD  R4, #1
-    LDRB R3, [R0, R4]
-    CMP  R3, #0
-    BNE  while
-  MOV R0, R4
-  BX  LR
+    ADD  R4, #1       @ Incrementar iterador.
+    LDRB R3, [R0, R4] @ Retirar byte da string.
+    CMP  R3, #0       @ Verificar se chegámos ao fim da string.
+    BNE  while        @ Se ainda não, continuar iteração.
+  MOV R0, R4          @ Retornar tamanho (número de iterações.)
+  BX  LR              @ return;
 
     
 _exit:

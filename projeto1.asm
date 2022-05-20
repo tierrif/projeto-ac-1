@@ -26,6 +26,41 @@
 .balign 4
   invalid: .asciz "Invalid option.\nTry again: "
 
+.balign 4
+  islower: .asciz "islower"
+.balign 4
+  isupper: .asciz "isupper"
+.balign 4
+  memchr: .asciz "memchr"
+.balign 4
+  memcpy: .asciz "memcpy"
+.balign 4
+  strcat: .asciz "strcat"
+.balign 4
+  strcmp: .asciz "strcmp"
+.balign 4
+  strcpy: .asciz "strcpy"
+.balign 4
+  strcspn: .asciz "strcspn"
+.balign 4
+  strlen: .asciz "strlen"
+.balign 4
+  strlwr: .asciz "strlwr"
+.balign 4
+  strncmp: .asciz "strncmp"
+.balign 4
+  strncpy: .asciz "strncpy"
+.balign 4
+  strrev: .asciz "strrev"
+.balign 4
+  strspn: .asciz "strspn"
+.balign 4
+  strupr: .asciz "strupr"
+.balign 4
+  tolower: .asciz "tolower"
+.balign 4
+  toupper: .asciz "toupper"
+
 .global scanf
 .global printf
 
