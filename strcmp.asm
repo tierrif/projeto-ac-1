@@ -1,4 +1,14 @@
-@ Secção de dados.
+/*
+ * Instituto Politécnico de Beja
+ * Escola Superior de Tecnologia e Gestão
+ * Engenharia Informática - Arquitetura de Computadores
+ * Projeto de Programação em Assembly para a Arquiterura ARM 1.0
+ *
+ * Tierri Ferreira, 22897
+ * André Azevedo, 22483
+ */
+
+@ Data Section
 .data
 .balign 4
   str1: .asciz "wABCDE" @ Primeira string a comparar

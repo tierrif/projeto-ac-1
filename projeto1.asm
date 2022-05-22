@@ -4,7 +4,8 @@
  * Engenharia Informática - Arquitetura de Computadores
  * Projeto de Programação em Assembly para a Arquiterura ARM 1.0
  *
- * Tierri Ferreira
+ * Tierri Ferreira, 22897
+ * André Azevedo, 22483
  */
 
 @ Data section
@@ -72,36 +73,36 @@
 .arm
 
 main:
-  LDR   R0, =menu @ Carregar string do menu.
-  BL    printf
-  B     skip_repeat
+  LDR   R0, =menu            @ Carregar string do menu.
+  BL    printf               @ Mostar menu.
+  B     skip_repeat          @ Não executar parte de input inválido.
 repeat:
-  LDR   R0, =invalid
-  BL    printf
+  LDR   R0, =invalid         @ Quando o utilizador usa input inválido, mostrar mensagem.
+  BL    printf               @ Chamar printf().
 skip_repeat:
-  LDR   R0, =string
-  LDR   R1, =test
-  BL    scanf
+  LDR   R0, =string          @ Carregar string com %s para scanf().
+  LDR   R1, =test            @ Carregar string de destino.
+  BL    scanf                @ Chamar scanf() e pedir input ao utilizador.
 
-  LDR   R2, =test
-  LDRB  R3, [R2, #0]
+  LDR   R2, =test            @ Carregar string de destino com input.
+  LDRB  R3, [R2, #0]         @ Carregar primeiro caracter, porque apenas queremos um caracter.
 
-  PUSH  {R0-R1, LR}
-  MOV   R0, R3
-  BL    _functionNameByIndex
-  MOV   R3, R0
-  POP   {R0-R1, LR}
+  PUSH  {R0-R1, LR}          @ Reservar R0, R1 e LR.
+  MOV   R0, R3               @ Colocar char no primeiro parâmetro.
+  BL    _functionNameByIndex @ Obter nome da função obtida pelo menu.
+  MOV   R3, R0               @ Retomar o valor retornado para R3.
+  POP   {R0-R1, LR}          @ Retomar a valores originais dos registos.
 
-  CMP   R3, #0
-  BEQ   repeat
+  CMP   R3, #0               @ Verificar se o nome da função é nulo.
+  BEQ   repeat               @ Se sim, o input foi inválido. Repetir.
 
-  LDR   R0, =run
-  MOV   R1, R3
-  BL    _strcat
+  LDR   R0, =run             @ Carregar string com comando ./run.
+  MOV   R1, R3               @ Colocar nome da função em segundo parâmetro.
+  BL    _strcat              @ Concatenar com strcat().
 
-  BL    system
+  BL    system               @ Executar o comando, executando o ficheiro respetivo da função.
 
-  B     _exit
+  B     _exit                @ Pedir ao SO para sair deste programa.
 
 _strcat:
   PUSH {R0, LR}        @ Reservar R0 e LR para chamar strlen().
@@ -132,60 +133,48 @@ _strlen:
   BX  LR              @ return;
 
 _functionNameByIndex:
+  @ Conservar R0 em R1.
   MOV   R1, R0
+  @ Retornar nulo por defeito.
   MOV   R0, #0
 
+  @ Obter nome da função pela letra do menu.
   CMP   R1, #'a'
   LDREQ R0, =islower
- 
   CMP   R1, #'b'
   LDREQ R0, =isupper
- 
   CMP   R1, #'c'
   LDREQ R0, =memchr
- 
   CMP   R1, #'d'
   LDREQ R0, =memcpy
- 
   CMP   R1, #'e'
   LDREQ R0, =strcat
- 
   CMP   R1, #'f'
   LDREQ R0, =strcmp
- 
   CMP   R1, #'g'
   LDREQ R0, =strcpy
- 
   CMP   R1, #'h'
   LDREQ R0, =strcspn
- 
   CMP   R1, #'i'
   LDREQ R0, =strlen
- 
   CMP   R1, #'j'
   LDREQ R0, =strlwr
- 
   CMP   R1, #'k'
   LDREQ R0, =strncmp
- 
   CMP   R1, #'l'
   LDREQ R0, =strncpy
- 
   CMP   R1, #'m'
   LDREQ R0, =strrev
- 
   CMP   R1, #'n'
   LDREQ R0, =strspn
- 
   CMP   R1, #'o'
   LDREQ R0, =strupr
- 
   CMP   R1, #'p'
   LDREQ R0, =tolower
- 
   CMP   R1, #'q'
   LDREQ R0, =toupper
 
+  @ return;
   BX    LR
 
 _exit:
